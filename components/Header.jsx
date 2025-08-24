@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Button } from './ui/button'
 import Nav from './Nav'
+import MobileNav from './MobileNav'
 const Header=()=> {
   return (
    <header className='py-8 xl:py-12 text-white '>
@@ -23,7 +24,7 @@ const Header=()=> {
          </div>
             {/*Mobile Navigation*/}
             <div className="xl:hidden">
-                mobile navigate
+             <MobileNav/>
             </div>
          
     </div>
