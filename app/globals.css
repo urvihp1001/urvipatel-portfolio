@@ -27,3 +27,14 @@
     @apply text-[20px] xl:text-[24px] leading-[1.1] font-semibold;
   }
 }
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px white;
+  transition: color 0.3s ease, -webkit-text-stroke 0.3s ease;
+}
+
+.text-outline-hover {
+  color: white !important;
+  -webkit-text-stroke: 0 !important;
+}

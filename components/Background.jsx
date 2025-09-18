@@ -1,53 +1,55 @@
 "use client";
 
-
 import { motion } from "framer-motion";
 import React from "react";
 
+// SVG triangle points (equilateral)
+const trianglePoints = "50,0 100,86.6 0,86.6";
 
-const blobTransition = {
-  duration: 12,
-  repeat: Infinity,
-  repeatType: "mirror",
-  ease: "easeInOut",
+const rows = 12;
+const cols = 20;
+
+// Generate positions for triangles in staggered rows
+const generateTriangles = () => {
+  const triangles = [];
+  const triangleWidth = 100;
+  const triangleHeight = 87;
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const offsetX = row % 2 === 0 ? 0 : triangleWidth / 2;
+      const x = col * triangleWidth + offsetX;
+      const y = row * (triangleHeight * 0.75);
+      triangles.push({ x, y, id: `tri-${row}-${col}` });
+    }
+  }
+  return triangles;
 };
 
+const triangles = generateTriangles();
 
 const Background = () => {
   return (
-    <div className="fixed inset-0 -z-10 bg-[#0b0b0f] overflow-hidden">
-      {/* main radial gradient base */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,192,203,0.15)_0%,transparent_70%)]" />
-
-
-      {/* blob 1 */}
+    <div className="fixed inset-0 -z-10 bg-black overflow-hidden">
+      {/* Existing grid lines and scanline */}
+      <div className="absolute inset-0 bg-[linear-gradient(transparent_95%,rgba(0,255,0,0.2)_96%),linear-gradient(90deg,transparent_95%,rgba(0,255,0,0.2)_96%)] bg-[length:40px_40px]" />
       <motion.div
-        className="absolute w-[400px] h-[400px] rounded-full bg-pink-500/30 blur-[100px]"
-        animate={{ x: [0, 150, -100, 0], y: [0, -100, 120, 0], scale: [1, 1.2, 0.9, 1] }}
-        transition={blobTransition}
-        style={{ top: "20%", left: "15%" }}
+        className="absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(0,255,0,0.05)_0px,rgba(0,255,0,0.05)_2px,transparent_2px,transparent_4px)]"
+        animate={{ backgroundPositionY: [0, 8] }}
+        transition={{ duration: 0.15, repeat: Infinity, ease: "linear" }}
       />
 
+    
 
-      {/* blob 2 */}
-      <motion.div
-        className="absolute w-[450px] h-[450px] rounded-full bg-white/10 blur-[120px]"
-        animate={{ x: [0, -120, 100, 0], y: [0, 80, -120, 0], scale: [1, 1.1, 0.95, 1] }}
-        transition={{ ...blobTransition, duration: 16 }}
-        style={{ top: "40%", right: "15%" }}
-      />
-
-
-     {/* blob 3 */}
-      <motion.div
-        className="absolute w-[300px] h-[300px] rounded-full bg-pink-300/20 blur-[90px]"
-        animate={{ x: [0, 80, -150, 0], y: [0, -60, 100, 0], scale: [1, 0.85, 1.15, 1] }}
-        transition={{ ...blobTransition, duration: 20 }}
-        style={{ bottom: "15%", left: "25%" }}
-      />
+      {/* central glow */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <motion.div
+          className="w-[500px] h-[500px] rounded-full bg-green-500/10 blur-[200px]"
+          animate={{ scale: [1, 1.1, 0.9, 1] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
     </div>
   );
 };
 
-
-export default Background; 
+export default Background;
